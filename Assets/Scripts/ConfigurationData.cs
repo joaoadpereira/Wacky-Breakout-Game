@@ -15,7 +15,7 @@ public class ConfigurationData
 
     // configuration data
     static float paddleMoveUnitsPerSecond = 10;
-    static float ballImpulseForce = 200;
+    static float ballImpulseForce = 400;
 
     #endregion
 

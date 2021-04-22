@@ -21,7 +21,7 @@ public class Paddle : MonoBehaviour
     bool isOutRight = false;
 
     //handling the touch with ball
-    const float BounceAngleHalfRange= (60 * Mathf.PI) / 180;
+    const float BounceAngleHalfRange= (30 * Mathf.PI) / 180;
     float halfColliderWidth;
 
     #endregion
@@ -122,8 +122,6 @@ public class Paddle : MonoBehaviour
 
         ContactPoint2D[] contacts = new ContactPoint2D[2];
         int v = coll.GetContacts(contacts);
-        Debug.Log(contacts[1].point.y);
-        Debug.Log(contacts[2].point.y);
 
         return Mathf.Abs(contacts[0].point.y - contacts[1].point.y) < tolerance;
     }
