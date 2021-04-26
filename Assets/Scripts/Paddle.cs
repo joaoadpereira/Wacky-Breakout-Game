@@ -9,8 +9,6 @@ public class Paddle : MonoBehaviour
 {
     #region Fields
 
-    [SerializeField] float controllerSpeed=2;
-
     //handle paddle in screen 
     float leftScreenX;
     float rightScreenX;
@@ -103,12 +101,8 @@ public class Paddle : MonoBehaviour
 
             // tell ball to set direction to new direction
             Ball ballScript = coll.gameObject.GetComponent<Ball>();
-
-            if (ballScript.IsBeginning == false)
-            {
-                ballScript.SetDirection(direction);
-            }
-
+            ballScript.SetDirection(direction);
+            
         }
     }
 
