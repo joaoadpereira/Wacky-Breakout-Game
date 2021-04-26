@@ -16,9 +16,9 @@ public class Ball : MonoBehaviour
     float paddleDimensionY;
     float radiousBall;
 
-    Vector2 positionBallIni = new Vector2();
-
+    //RigidBody Field
     Rigidbody2D rB2D;
+
     #endregion
 
     #region Properties
@@ -30,6 +30,7 @@ public class Ball : MonoBehaviour
 
     #endregion
 
+    #region Methods
     // Start is called before the first frame update
     void Start()
     {
@@ -42,39 +43,15 @@ public class Ball : MonoBehaviour
 
         //get info about ball
         radiousBall = GetComponent<CircleCollider2D>().radius;
-    }
 
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        if (isBeginning)
-        {
-            Vector2 paddlePosition = paddle.transform.position;
-
-            //set position of the ball
-            positionBallIni.x = paddlePosition.x;
-            positionBallIni.y = paddlePosition.y + paddleDimensionY / 2 + radiousBall;
-
-            transform.position = positionBallIni;
-        }
-
-
-        if (Input.GetKeyDown(KeyCode.Space) && isBeginning == true)
-        {
-            isBeginning = false;
-            AddMovement();
-        }
-    }
-
-    void AddMovement()
-    {
-        float angleDegreesInitial = 90;
-        float angleRadsinitial = (Mathf.PI / 180) * angleDegreesInitial;
+        //add initial movement
+        float angleDegreesInitial = -90;
+        float angleRadsinitial = Mathf.Deg2Rad * angleDegreesInitial;
         Vector2 direction = new Vector2();
         direction.x = Mathf.Cos(angleRadsinitial);
         direction.y = Mathf.Sin(angleRadsinitial);
-
-        rB2D.AddForce(direction * ConfigurationUtils.BallImpulseForce, ForceMode2D.Impulse);
+        rB2D.AddForce(direction * ConfigurationUtils.BallImpulseForce, ForceMode2D.Force);
+        
     }
 
     /// <summary>
@@ -89,9 +66,14 @@ public class Ball : MonoBehaviour
         }
     }
 
-
+    /// <summary>
+    /// Defines the direction of the ball based on the newDirection vector parameter
+    /// </summary>
+    /// <param name="newDirection"></param>
     public void SetDirection(Vector2 newDirection)
     {
         rB2D.velocity = rB2D.velocity.magnitude * newDirection ;
     }
+
+    #endregion
 }
