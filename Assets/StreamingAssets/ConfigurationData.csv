@@ -1,2 +1,2 @@
-paddleMoveUnitsPerSecond,ballImpulseForce
-15,350
+paddleMoveUnitsPerSecond,ballImpulseForce,ballDeadTime
+15,350,10

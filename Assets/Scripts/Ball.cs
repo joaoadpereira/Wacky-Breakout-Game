@@ -19,6 +19,15 @@ public class Ball : MonoBehaviour
     //RigidBody Field
     Rigidbody2D rB2D;
 
+    //reference to ball manager
+    BallManager ballManager;
+
+    //Use a timer 
+    Timer Timer;
+
+    //Flag about is moviment or not 
+    bool isMoving = false;
+
     #endregion
 
     #region Properties
@@ -44,14 +53,60 @@ public class Ball : MonoBehaviour
         //get info about ball
         radiousBall = GetComponent<CircleCollider2D>().radius;
 
-        //add initial movement
+        //Define Ball manager
+        ballManager = GameObject.FindGameObjectWithTag("BallManager").GetComponent<BallManager>();
+
+        //Setting timer of 1 second
+        Timer = gameObject.GetComponent<Timer>();
+        Timer.Duration = 1;
+        Timer.Run();
+
+    }
+
+    private void Update()
+    {
+        //After 1 second and the ball is not moving
+        if(Timer.Finished && isMoving == false)
+        {
+            //add initial movement to ball
+            AddInitialMovement();
+            //change flag
+            isMoving = !isMoving;
+            
+        }
+
+        //Destroys ball after a random time
+        if (Timer.Finished && isMoving == true)
+        {
+            DestroyBall(false);
+        }
+
+        //Handle if ball leaves the game space
+        if(transform.position.y < ScreenUtils.ScreenBottom)
+        {
+            DestroyBall(true);
+        }
+    }
+
+    /// <summary>
+    /// Add initial movement
+    /// </summary>
+    void AddInitialMovement()
+    {
         float angleDegreesInitial = -90;
         float angleRadsinitial = Mathf.Deg2Rad * angleDegreesInitial;
         Vector2 direction = new Vector2();
         direction.x = Mathf.Cos(angleRadsinitial);
         direction.y = Mathf.Sin(angleRadsinitial);
         rB2D.AddForce(direction * ConfigurationUtils.BallImpulseForce, ForceMode2D.Force);
-        
+
+        //Set a Dead Timer with a random time
+        if(!Timer.Running)
+        {
+            Timer.Duration = ConfigurationUtils.BallDeadTime; /*RANDOM TIME*/
+            Timer.Run();
+        }
+
     }
 
     /// <summary>
@@ -73,6 +128,20 @@ public class Ball : MonoBehaviour
     public void SetDirection(Vector2 newDirection)
     {
         rB2D.velocity = rB2D.velocity.magnitude * newDirection ;
+    }
+
+
+    /// <summary>
+    /// Method is activated when the ball leaves display (bottom)
+    /// </summary>
+    private void DestroyBall(bool reduceNumberOfBalls)
+    {
+       //Informs about the ball is out
+        ballManager.InstantiateNewBall(reduceNumberOfBalls); 
+
+        //Destroy this ball
+        Destroy(gameObject);
+
     }
 
     #endregion

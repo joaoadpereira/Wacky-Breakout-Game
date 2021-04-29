@@ -16,6 +16,7 @@ public class ConfigurationData
     // configuration data
     static float paddleMoveUnitsPerSecond = 10;
     static float ballImpulseForce = 400;
+    static float ballDeadTime = 9;
 
     #endregion
 
@@ -37,6 +38,14 @@ public class ConfigurationData
     public float BallImpulseForce
     {
         get { return ballImpulseForce; }    
+    }
+
+    /// <summary>
+    /// Gets the time to destroy a ball 
+    /// </summary>
+    public float BallDeadTime
+    {
+        get { return ballDeadTime; }
     }
 
     #endregion
@@ -86,6 +95,7 @@ public class ConfigurationData
 
         paddleMoveUnitsPerSecond = float.Parse(values[0]);
         ballImpulseForce = float.Parse(values[1]);
+        ballDeadTime = float.Parse(values[2]);
     }
 
     #endregion

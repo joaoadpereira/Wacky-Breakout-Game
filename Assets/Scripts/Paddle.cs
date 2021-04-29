@@ -116,7 +116,7 @@ public class Paddle : MonoBehaviour
 
         ContactPoint2D[] contacts = new ContactPoint2D[2];
         int v = coll.GetContacts(contacts);
-
+        
         return Mathf.Abs(contacts[0].point.y - contacts[1].point.y) < tolerance;
     }
     #endregion
