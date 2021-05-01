@@ -19,6 +19,7 @@ public class ConfigurationData
     static float ballDeadTime = 9;
     static float ballMinSpawnTime = 4;
     static float ballMaxSpawnTime = 11;
+    static float initialNumberBalls = 4;
 
     #endregion
 
@@ -64,6 +65,14 @@ public class ConfigurationData
     public float BallMaxSpawnTime
     {
         get { return ballMaxSpawnTime; }
+    }
+
+    /// <summary>
+    /// Gets the initial number of balls
+    /// </summary>
+    public float InitialNumberBalls
+    {
+        get { return initialNumberBalls; }
     }
 
     #endregion
@@ -116,6 +125,7 @@ public class ConfigurationData
         ballDeadTime = float.Parse(values[2]);
         ballMinSpawnTime = float.Parse(values[3]);
         ballMaxSpawnTime = float.Parse(values[4]);
+        initialNumberBalls = float.Parse(values[5]);
 
     }
 

@@ -7,7 +7,7 @@ public static class BallUtils
     #region Fields
 
     //initial number of balls available
-    static int numberOfBalls = 3;
+    static int numberOfBalls=(int)ConfigurationUtils.InitialNumberBalls;
 
     #endregion
 
@@ -24,6 +24,7 @@ public static class BallUtils
     #endregion
 
     #region Methods
+
 
 
     /// <summary>

@@ -75,9 +75,6 @@ public class BallManager : MonoBehaviour
     {
         BallUtils.ReduceNumberOfBalls(operation);
 
-        //Debug number of balls
-        Debug.Log("Number of balls :" + BallUtils.NumberOfBalls);
-
         //Instantiate a new ball
         if (InstantiateNewBall)
         {

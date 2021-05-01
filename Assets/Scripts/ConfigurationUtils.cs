@@ -40,6 +40,11 @@ public static class ConfigurationUtils
         get { return configurationData.BallMaxSpawnTime; }
     }
 
+    public static float InitialNumberBalls
+    {
+        get { return configurationData.InitialNumberBalls; }
+    }
+
     #endregion
 
     /// <summary>
