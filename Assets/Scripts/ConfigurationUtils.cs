@@ -30,6 +30,16 @@ public static class ConfigurationUtils
         get { return configurationData.BallDeadTime; }
     }
 
+    public static float BallMinSpawnTime
+    {
+        get { return configurationData.BallMinSpawnTime; }
+    }
+    
+    public static float BallMaxSpawnTime
+    {
+        get { return configurationData.BallMaxSpawnTime; }
+    }
+
     #endregion
 
     /// <summary>

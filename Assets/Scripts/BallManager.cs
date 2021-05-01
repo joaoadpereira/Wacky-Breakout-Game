@@ -9,6 +9,14 @@ public class BallManager : MonoBehaviour
 
     [SerializeField] GameObject ball;
 
+    Timer InstantiateTimer;
+
+    //Screen Points
+    Vector2 spawnLocationMin;
+    Vector2 spawnLocationMax;
+
+    //flag to retry if spawn zone has overlap
+    bool retrySpawn=false;
 
     #endregion
 
@@ -25,32 +33,85 @@ public class BallManager : MonoBehaviour
     void Start()
     {
         //Add initial ball
-        Instantiate(ball, Vector2.zero, Quaternion.identity);
+        GameObject initialBall = Instantiate(ball, Vector2.zero, Quaternion.identity);
+
+        //Add a timer and start it for ball instantiation 
+        InstantiateTimer = gameObject.AddComponent<Timer>();
+        SetTimer();
+
+        //Define corners of spawn zone rectangle 
+        BoxCollider2D collider = initialBall.GetComponent<BoxCollider2D>();
+        float ballColliderHalfWidth = collider.size.x / 2;
+        float ballColliderHalfHeight = collider.size.y / 2;
+        spawnLocationMin = new Vector2(initialBall.transform.position.x - ballColliderHalfWidth, initialBall.transform.position.y - ballColliderHalfHeight);
+        spawnLocationMax = new Vector2(initialBall.transform.position.x + ballColliderHalfWidth, initialBall.transform.position.y + ballColliderHalfHeight);
     }
 
     // Update is called once per frame
     void Update()
     {
+        
+        //When the timer (random time) is finished, spawn a new ball
+        if (InstantiateTimer.Finished)
+        {
+            //add a new ball and increase the counter
+            HandleBallOut(1,true);
+            SetTimer();
+        }
 
-
+        //Check if spawn position is overlaped
+        if (retrySpawn)
+        {
+            SpawnBall();
+        }
     }
 
     /// <summary>
     /// Instantiates a new ball 
     /// </summary>
-    public void InstantiateNewBall(bool reduceNumberOfBalls)
+    /// <param name="operation">Add or take balls from counter</param>
+    /// <param name="InstantiateNewBall"></param>
+    public void HandleBallOut(int operation,bool InstantiateNewBall)
     {
-        //Reduce the number of balls available
-        if (reduceNumberOfBalls == true)
-        {           
-            BallUtils.ReduceNumberOfBalls();
-        }
-        
-        //Instantiate a new ball
-        Instantiate(ball, Vector2.zero, Quaternion.identity);
+        BallUtils.ReduceNumberOfBalls(operation);
 
         //Debug number of balls
         Debug.Log("Number of balls :" + BallUtils.NumberOfBalls);
+
+        //Instantiate a new ball
+        if (InstantiateNewBall)
+        {
+            SpawnBall();
+        }
+    }
+
+    /// <summary>
+    /// Spawns new ball. Takes in consideration if spawn locations is/will overlap. Then waits until possible spawn
+    /// </summary>
+    void SpawnBall()
+    {
+        if (Physics2D.OverlapArea(spawnLocationMin, spawnLocationMax) == null)
+        {
+            retrySpawn = false;
+            Instantiate(ball, Vector2.zero, Quaternion.identity);
+        }
+        else
+        {
+            retrySpawn = true;
+        }
+    }
+
+    /// <summary>
+    /// Sets a Timer with random time and runs it 
+    /// </summary>
+    void SetTimer()
+    {
+        if (!InstantiateTimer.Running)
+        {
+            float randomTime = Random.Range(ConfigurationUtils.BallMinSpawnTime, ConfigurationUtils.BallMaxSpawnTime); /*RANDOM MIN & MAX HERE*/
+            InstantiateTimer.Duration = randomTime;
+            InstantiateTimer.Run();
+        }
     }
 
     #endregion

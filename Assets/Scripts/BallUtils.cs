@@ -27,11 +27,11 @@ public static class BallUtils
 
 
     /// <summary>
-    /// Take one ball out of total number of balls available 
+    /// Take or add "operation" balls out of total number of balls available 
     /// </summary>
-    public static void ReduceNumberOfBalls()
+    public static void ReduceNumberOfBalls(int operation)
     {
-        numberOfBalls -= 1;
+        numberOfBalls += operation;
       
     }
 

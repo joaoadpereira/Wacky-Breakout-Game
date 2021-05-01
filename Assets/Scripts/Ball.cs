@@ -78,13 +78,14 @@ public class Ball : MonoBehaviour
         //Destroys ball after a random time
         if (Timer.Finished && isMoving == true)
         {
-            DestroyBall(false);
+            //Ball that reached the end of life. So it will not spawn/instantiate a new ball or decrease ball counter(only destroys it self)
+            DestroyBall(0,false);
         }
 
         //Handle if ball leaves the game space
         if(transform.position.y < ScreenUtils.ScreenBottom)
         {
-            DestroyBall(true);
+            DestroyBall(-1);
         }
     }
 
@@ -133,11 +134,12 @@ public class Ball : MonoBehaviour
 
     /// <summary>
     /// Method is activated when the ball leaves display (bottom)
+    /// It adds/removes an "operation" ball
     /// </summary>
-    private void DestroyBall(bool reduceNumberOfBalls)
+    private void DestroyBall(int operation,bool InstantiateNewBall=true)
     {
        //Informs about the ball is out
-        ballManager.InstantiateNewBall(reduceNumberOfBalls); 
+        ballManager.HandleBallOut(operation,InstantiateNewBall); 
 
         //Destroy this ball
         Destroy(gameObject);

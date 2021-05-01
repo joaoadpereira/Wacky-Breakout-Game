@@ -17,6 +17,8 @@ public class ConfigurationData
     static float paddleMoveUnitsPerSecond = 10;
     static float ballImpulseForce = 400;
     static float ballDeadTime = 9;
+    static float ballMinSpawnTime = 4;
+    static float ballMaxSpawnTime = 11;
 
     #endregion
 
@@ -46,6 +48,22 @@ public class ConfigurationData
     public float BallDeadTime
     {
         get { return ballDeadTime; }
+    }
+
+    /// <summary>
+    /// Gets the min time to spawn ball
+    /// </summary>
+    public float BallMinSpawnTime
+    {
+        get { return ballMinSpawnTime; }
+    }
+
+    /// <summary>
+    /// Gets the max time to spawn ball
+    /// </summary>
+    public float BallMaxSpawnTime
+    {
+        get { return ballMaxSpawnTime; }
     }
 
     #endregion
@@ -96,6 +114,9 @@ public class ConfigurationData
         paddleMoveUnitsPerSecond = float.Parse(values[0]);
         ballImpulseForce = float.Parse(values[1]);
         ballDeadTime = float.Parse(values[2]);
+        ballMinSpawnTime = float.Parse(values[3]);
+        ballMaxSpawnTime = float.Parse(values[4]);
+
     }
 
     #endregion
