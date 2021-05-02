@@ -99,7 +99,7 @@ public class Ball : MonoBehaviour
         Vector2 direction = new Vector2();
         direction.x = Mathf.Cos(angleRadsinitial);
         direction.y = Mathf.Sin(angleRadsinitial);
-        rB2D.AddForce(direction * ConfigurationUtils.BallImpulseForce, ForceMode2D.Force);
+        rB2D.AddForce(direction * ConfigurationUtils.BallImpulseForce);
 
         //Set a Dead Timer with a random time
         if(!Timer.Running)

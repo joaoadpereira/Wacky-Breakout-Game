@@ -14,10 +14,7 @@ public class Block : MonoBehaviour
 
     #region Methods
 
-    virtual protected void Start()
-    {
 
-    }
 
     ///// <summary>
     ///// Function to handle the impact of block with ball
@@ -38,7 +35,7 @@ public class Block : MonoBehaviour
     }
 
 
-    virtual protected void OnCollisionEnter2D(Collision2D col)
+    void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.CompareTag("Ball"))
         {
