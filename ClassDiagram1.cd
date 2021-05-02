@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Block">
+    <Position X="2.75" Y="0.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAACAAAAAAAAAEAAAAAAAAAAAAAAAgAABAAAA=</HashCode>
+      <FileName>Assets\Scripts\Block_Scripts\Block.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Block_Bonus">
+    <Position X="2.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Block_Scripts\Block_Bonus.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Block_Freezer">
+    <Position X="4.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Block_Scripts\Block_Freezer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Block_Speedup">
+    <Position X="6.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Block_Scripts\Block_Speedup.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Block_Standard">
+    <Position X="0.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Block_Scripts\Block_Standard.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

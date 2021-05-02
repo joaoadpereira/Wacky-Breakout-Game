@@ -111,15 +111,16 @@ public class Ball : MonoBehaviour
     }
 
     /// <summary>
-    /// Handles when impact occurs with a block 
+    /// Handles when impact occurs with a block -> NOT ANYMORE
+    /// Impact with blocks are handled within the block 
     /// </summary>
     /// <param name="col"></param>
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.CompareTag("Block"))
-        {
-            Destroy(col.gameObject);
-        }
+        //if (col.gameObject.CompareTag("Block"))
+        //{
+        //    col.gameObject.GetComponent<>().HandleBlockBallImpact();
+        //}
     }
 
     /// <summary>

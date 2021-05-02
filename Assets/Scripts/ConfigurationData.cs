@@ -21,6 +21,17 @@ public class ConfigurationData
     static float ballMaxSpawnTime = 11;
     static float initialNumberBalls = 4;
 
+    static float blockStandardPoints = 1;
+    static float blockBonusPoints = 4;
+    static float blockFreezerPoints = 5;
+    static float blockSpeedupPoints = 5;
+
+    static float blockStandardProbability = 70;
+    static float blockBonusProbability = 20;
+    static float blockFreezerProbability = 5;
+    static float blockSpeedupProbability = 5;
+
+
     #endregion
 
     #region Properties
@@ -75,6 +86,59 @@ public class ConfigurationData
         get { return initialNumberBalls; }
     }
 
+    /// <summary>
+    /// Gets the points of standard block
+    /// </summary>
+    public float BlockStandardPoints
+    {
+        get { return blockStandardPoints; }
+    }
+    
+    /// <summary>
+    /// Gets the points of bonus block
+    /// </summary>
+    public float BlockBonusPoints
+    {
+        get { return blockBonusPoints; }
+    }
+
+    /// <summary>
+    /// Gets the points of freezer block
+    /// </summary>
+    public float BlockFreezerPoints
+    {
+        get { return blockFreezerPoints; }
+    }
+
+    /// <summary>
+    /// Gets the points of block points 
+    /// </summary>
+    public float BlockSpeedupPoints
+    {
+        get { return blockSpeedupPoints; }
+    }
+
+    public float BlockStandardProbability
+    {
+        get { return blockStandardProbability; }
+    }
+
+    public float BlockBonusProbability
+    {
+        get { return blockBonusProbability; }
+    }
+
+    public float BlockFreezerProbability
+    {
+        get { return blockFreezerProbability; }
+    }
+
+    public float BlockSpeedupProbability
+    {
+        get { return blockSpeedupProbability; }
+    }
+
+
     #endregion
 
     #region Constructor
@@ -126,6 +190,16 @@ public class ConfigurationData
         ballMinSpawnTime = float.Parse(values[3]);
         ballMaxSpawnTime = float.Parse(values[4]);
         initialNumberBalls = float.Parse(values[5]);
+
+        blockStandardPoints = float.Parse(values[6]);
+        blockBonusPoints=float.Parse(values[7]);
+        blockFreezerPoints=float.Parse(values[8]);
+        blockSpeedupPoints=float.Parse(values[9]);
+
+        blockStandardProbability=float.Parse(values[10]);;
+        blockBonusProbability=float.Parse(values[11]);;
+        blockFreezerProbability=float.Parse(values[12]);
+        blockSpeedupProbability=float.Parse(values[13]);
 
     }
 

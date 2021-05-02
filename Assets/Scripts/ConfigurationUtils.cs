@@ -45,6 +45,46 @@ public static class ConfigurationUtils
         get { return configurationData.InitialNumberBalls; }
     }
 
+    public static float BlockStandardPoints
+    {
+        get { return configurationData.BlockStandardPoints; }
+    }
+
+    public static float BlockBonusPoints
+    {
+        get { return configurationData.BlockBonusPoints; }
+    }
+
+    public static float BlockFreezerPoints
+    {
+        get { return configurationData.BlockFreezerPoints; }
+    }
+
+    public static float BlockSpeedupPoints
+    {
+        get { return configurationData.BlockSpeedupPoints; }
+    }
+
+    public static float BlockStandardProbability
+    {
+        get { return configurationData.BlockStandardProbability; }
+    }
+
+    public static float BlockBonusProbability
+    {
+        get { return configurationData.BlockBonusProbability; }
+    }
+
+    public static float BlockFreezerProbability
+    {
+        get { return configurationData.BlockFreezerProbability; }
+    }
+
+    public static float BlockSpeedupProbability
+    {
+        get { return configurationData.BlockSpeedupProbability; }
+    }
+
     #endregion
 
     /// <summary>
