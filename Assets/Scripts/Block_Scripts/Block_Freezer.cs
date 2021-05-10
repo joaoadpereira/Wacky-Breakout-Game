@@ -9,15 +9,11 @@ public class Block_Freezer : Block
     {
         destroyPoints = ConfigurationUtils.BlockFreezerPoints;
         percentageSpawn = ConfigurationUtils.BlockFreezerProbability;
+        effect = PickupEffect.Freezer;
     }
 
-
-
-    public override void ActionBlock()
-    {
-        //Some actions should be implemented here
-
-
-        base.ActionBlock();
-    }
+    //protected override void ActionBlock()
+    //{
+    //    base.ActionBlock();
+    //}
 }
