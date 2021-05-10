@@ -13,11 +13,8 @@ public class Block_Speedup : Block
 
 
 
-    public override void ActionBlock()
-    {
-        //some actions should be implemented here
-
-
-        base.ActionBlock();
-    }
+    //protected override void ActionBlock()
+    //{
+    //    base.ActionBlock();
+    //}
 }

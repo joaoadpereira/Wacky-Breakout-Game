@@ -22,6 +22,13 @@ public class Paddle : MonoBehaviour
     const float BounceAngleHalfRange= (30 * Mathf.PI) / 180;
     float halfColliderWidth;
 
+    //handling the effects in paddle
+    bool frozenPaddle = false;
+    Timer timerFrozenPaddle;
+    bool timerFrozenRunning = false;
+    float timeAgain;
+
+
     #endregion
 
     #region Methods
@@ -38,7 +45,11 @@ public class Paddle : MonoBehaviour
         rightScreenX = ScreenUtils.ScreenRight;
 
         //handle touch with ball
-        halfColliderWidth = widthSprite / 2; 
+        halfColliderWidth = widthSprite / 2;
+
+        //set up listener for the freezerEffect
+        timerFrozenPaddle = GetComponent<Timer>();
+        EventManager.AddFreezeListener(FreezePaddle);
     }
 
     /// <summary>
@@ -52,17 +63,20 @@ public class Paddle : MonoBehaviour
         float positionX = transform.position.x;
         float horizontalInput = Input.GetAxis("PaddleControl");
 
-        if (horizontalInput > 0 && isOutRight == false)
+        //check if paddle shouldn't be frozen 
+        if (!frozenPaddle)
         {
-            positionX += horizontalInput * ConfigurationUtils.PaddleMoveUnitsPerSecond * Time.deltaTime;
-        }
-        else if (horizontalInput < 0 && isOutLeft == false)
-        {
-            positionX += horizontalInput * ConfigurationUtils.PaddleMoveUnitsPerSecond * Time.deltaTime;
-        }
+            if (horizontalInput > 0 && isOutRight == false)
+            {
+                positionX += horizontalInput * ConfigurationUtils.PaddleMoveUnitsPerSecond * Time.deltaTime;
+            }
+            else if (horizontalInput < 0 && isOutLeft == false)
+            {
+                positionX += horizontalInput * ConfigurationUtils.PaddleMoveUnitsPerSecond * Time.deltaTime;
+            }
 
-        transform.position = new Vector2(positionX, transform.position.y);
-
+            transform.position = new Vector2(positionX, transform.position.y);
+        }
         //Keep paddle in screen
         if (position.x - widthSprite < leftScreenX)
         {
@@ -80,6 +94,30 @@ public class Paddle : MonoBehaviour
         else
         {
             isOutRight = false;
+        }
+
+    }
+
+    private void Update()
+    {
+        
+        //unfreeze the paddle and stop the freeze timer (once freeze timer is finished)
+        if (timerFrozenPaddle.Finished)
+        {
+            //run again the timer
+            if (timerFrozenRunning == true)
+            {
+                frozenPaddle = true;
+                timerFrozenPaddle.Duration = timeAgain;
+                timerFrozenPaddle.Run();
+                timerFrozenRunning = false;
+            }
+            else
+            {
+                //unfreeze the paddle
+                frozenPaddle = false;
+            }
+
         }
 
     }
@@ -106,8 +144,8 @@ public class Paddle : MonoBehaviour
         }
     }
 
-     bool CollisionPlace(Collision2D coll)
-    {
+    bool CollisionPlace(Collision2D coll)
+     {
         const float tolerance = 0.05f;
 
         // on top collisions, both contact points are at the same y location
@@ -118,6 +156,32 @@ public class Paddle : MonoBehaviour
         int v = coll.GetContacts(contacts);
         
         return Mathf.Abs(contacts[0].point.y - contacts[1].point.y) < tolerance;
+     }
+
+
+    /// <summary>
+    /// Handles with Freezer event.
+    /// Initiates a freeze timer. If already running and called again, keeps a
+    /// flag "running" to communicate that timer is running.
+    /// </summary>
+    /// <param name="freezeDuration"></param>
+    void FreezePaddle(float freezeDuration)
+    {
+        //timer already running 
+        if (timerFrozenPaddle.Running)
+        {
+            timerFrozenRunning = true;
+            timeAgain = freezeDuration;
+        }
+        else
+        {
+            //starts the freeze timer and sets the flag frozen
+            timerFrozenPaddle.Duration = freezeDuration;
+            timerFrozenPaddle.Run();
+            frozenPaddle = true;
+        }
+        
     }
+
     #endregion
 }

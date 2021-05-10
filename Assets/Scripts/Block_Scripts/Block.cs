@@ -10,32 +10,30 @@ public class Block : MonoBehaviour
 
     protected float percentageSpawn;
 
+    protected PickupEffect effect;
+
+    #endregion
+
+    #region Properties
+
+    public PickupEffect Effect
+    {
+        get { return effect; }
+    }
+
     #endregion
 
     #region Methods
 
 
 
-    ///// <summary>
-    ///// Function to handle the impact of block with ball
-    ///// </summary>
-    //virtual protected void HandleBlockBallImpact()
-    //{
-    //    //Add 'destroyPoints' from global points 
-    //    BlockManager.AddPoints(destroyPoints);
-
-    //    //Destroy this block
-    //    Destroy(gameObject);
-    //}
-
- 
-    public virtual void ActionBlock()
-    {
-        //some code
-    }
 
 
-    void OnCollisionEnter2D(Collision2D col)
+    /// <summary>
+    /// When a collision happens with a ball, add points and destroy this block
+    /// </summary>
+    /// <param name="col"></param>
+    virtual protected void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.CompareTag("Ball"))
         {

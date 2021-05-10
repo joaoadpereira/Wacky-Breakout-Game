@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8063472666361024399}
   - component: {fileID: 8063472666361024396}
   - component: {fileID: 4081943445493893653}
+  - component: {fileID: -7938672096205015059}
   m_Layer: 0
   m_Name: BlockFreezer
   m_TagString: Block
@@ -120,5 +121,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0925083e086a9b245b01e24d041e093c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-7938672096205015059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8063472666361024397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b8e2d54331e0d345ae0abf7e075a6b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

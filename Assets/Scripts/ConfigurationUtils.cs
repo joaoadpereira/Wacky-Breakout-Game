@@ -85,6 +85,11 @@ public static class ConfigurationUtils
         get { return configurationData.BlockSpeedupProbability; }
     }
 
+    public static float FreezerEffectDuration
+    {
+        get { return configurationData.FreezerEffectDuration; }
+    }
+
     #endregion
 
     /// <summary>

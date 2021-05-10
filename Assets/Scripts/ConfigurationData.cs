@@ -30,6 +30,7 @@ public class ConfigurationData
     static float blockBonusProbability = 20;
     static float blockFreezerProbability = 5;
     static float blockSpeedupProbability = 5;
+    static float freezerEffectDuration = 5;
 
 
     #endregion
@@ -138,6 +139,10 @@ public class ConfigurationData
         get { return blockSpeedupProbability; }
     }
 
+    public float FreezerEffectDuration
+    {
+        get { return freezerEffectDuration; }
+    }
 
     #endregion
 
@@ -200,6 +205,8 @@ public class ConfigurationData
         blockBonusProbability=float.Parse(values[11]);;
         blockFreezerProbability=float.Parse(values[12]);
         blockSpeedupProbability=float.Parse(values[13]);
+
+        freezerEffectDuration = float.Parse(values[14]);
 
     }
 
