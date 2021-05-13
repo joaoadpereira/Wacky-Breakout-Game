@@ -31,7 +31,7 @@ public class SpawnBlocks : MonoBehaviour
     void Start()
     {
         //get block measurements 
-        block = Instantiate(standardBlock);
+        block = Instantiate(bonusBlock);
         blockHeight = block.GetComponent<BoxCollider2D>().size.y;
         blockWidth = block.GetComponent<BoxCollider2D>().size.x;
         Destroy(block);
@@ -51,11 +51,12 @@ public class SpawnBlocks : MonoBehaviour
     private void CreateBlocks()
     {
         //calculate number of blocks per row
-        int n = (int)Mathf.Round(widthScreen / blockWidth);
+        int n = Mathf.FloorToInt(widthScreen / blockWidth);
+        Debug.Log(widthScreen / blockWidth + "; " + n);
         //Number of blocks per column
         int m = 3; 
         //calculate space necessary 
-        float space = widthScreen / (2 * n * blockWidth);
+        float space = (widthScreen- n * blockWidth) / 2;
 
         Vector2 positionReference = new Vector2(ScreenUtils.ScreenLeft + space + blockWidth / 2, ScreenUtils.ScreenTop - heightScreen * 0.2f);
  
