@@ -95,6 +95,15 @@ public class Timer : MonoBehaviour
             elapsedSeconds = 0;
 		}
 	}
-	
+
+	/// <summary>
+	/// Stops the timer
+	/// </summary>
+	public void Stop()
+	{
+		started = false;
+		running = false;
+	}
+
 	#endregion
 }

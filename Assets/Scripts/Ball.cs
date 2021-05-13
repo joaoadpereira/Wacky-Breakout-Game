@@ -23,7 +23,8 @@ public class Ball : MonoBehaviour
     BallManager ballManager;
 
     //Use a timer 
-    Timer Timer;
+    Timer initialTimer;
+    Timer deadTimer;
 
     //Flag about is moviment or not 
     bool isMoving = false;
@@ -56,17 +57,24 @@ public class Ball : MonoBehaviour
         //Define Ball manager
         ballManager = GameObject.FindGameObjectWithTag("BallManager").GetComponent<BallManager>();
 
+        //Add a timer
+        initialTimer = gameObject.AddComponent<Timer>();
+        deadTimer = gameObject.AddComponent<Timer>();
+
         //Setting timer of 1 second
-        Timer = gameObject.GetComponent<Timer>();
-        Timer.Duration = 1;
-        Timer.Run();
+        initialTimer.Duration = 1;
+        initialTimer.Run();
+
+        //settiing dead timer 
+        deadTimer.Duration = ConfigurationUtils.BallDeadTime; /*RANDOM TIME*/
+        deadTimer.Run();
 
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         //After 1 second and the ball is not moving
-        if(Timer.Finished && isMoving == false)
+        if(initialTimer.Finished && isMoving == false)
         {
             //add initial movement to ball
             AddInitialMovement();
@@ -76,7 +84,7 @@ public class Ball : MonoBehaviour
         }
 
         //Destroys ball after a random time
-        if (Timer.Finished && isMoving == true)
+        if (deadTimer.Finished && isMoving == true)
         {
             //Ball that reached the end of life. So it will not spawn/instantiate a new ball or decrease ball counter(only destroys it self)
             DestroyBall(0,false);
@@ -101,27 +109,8 @@ public class Ball : MonoBehaviour
         direction.y = Mathf.Sin(angleRadsinitial);
         rB2D.AddForce(direction * ConfigurationUtils.BallImpulseForce);
 
-        //Set a Dead Timer with a random time
-        if(!Timer.Running)
-        {
-            Timer.Duration = ConfigurationUtils.BallDeadTime; /*RANDOM TIME*/
-            Timer.Run();
-        }
-
     }
 
-    /// <summary>
-    /// Handles when impact occurs with a block -> NOT ANYMORE
-    /// Impact with blocks are handled within the block 
-    /// </summary>
-    /// <param name="col"></param>
-    private void OnCollisionEnter2D(Collision2D col)
-    {
-        //if (col.gameObject.CompareTag("Block"))
-        //{
-        //    col.gameObject.GetComponent<>().HandleBlockBallImpact();
-        //}
-    }
 
     /// <summary>
     /// Defines the direction of the ball based on the newDirection vector parameter
