@@ -8,10 +8,12 @@ public class PickupBlock : Block
     #region Fields
 
     FreezerEffectActivated freezerEffectActivated;
+    SpeedupEffectActivated speedupEffectActivated;
 
     PickupEffect effectThisBlock;
 
     float freezeEffectDuration;
+    float speedupEffectDuration;
 
     #endregion
 
@@ -23,21 +25,27 @@ public class PickupBlock : Block
         //check the effect of this block
         effectThisBlock = GetComponent<Block>().Effect;
 
-        //set the freeze duration
+        //set the effects duration
         freezeEffectDuration = ConfigurationUtils.FreezerEffectDuration;
+        speedupEffectDuration = ConfigurationUtils.SpeedupEffectDuration;
         
         //Event handling 
         freezerEffectActivated = new FreezerEffectActivated();
+        speedupEffectActivated = new SpeedupEffectActivated();
 
-        //add effect invoker if this block is a freezer
+        //add effect invoker if this block is a freezer/speedup
         if (effectThisBlock == PickupEffect.Freezer)
         {
             EventManager.AddFreezeInvoker(this);
         }
+        else if (effectThisBlock == PickupEffect.Speedup)
+        {
+            EventManager.AddSpeedupInvoker(this);
+        }
     }
 
     /// <summary>
-    /// Adds the given listener for the destroy event
+    /// Adds the given listener for the freezer event
     /// </summary>
     /// <param name="listener"></param>
     public void AddFreezerEffectListener(UnityAction<float> listener)
@@ -45,15 +53,31 @@ public class PickupBlock : Block
         freezerEffectActivated.AddListener(listener);
     }
 
+    /// <summary>
+    /// Adds the given listener for the speedup event
+    /// </summary>
+    /// <param name="listener"></param>
+    public void AddSpeedupEffectListener(UnityAction<float> listener)
+    {
+        speedupEffectActivated.AddListener(listener);
+    }
+
     protected override void OnCollisionEnter2D(Collision2D col)
     {
-        //effect of this block is freezer
-        if (effectThisBlock == PickupEffect.Freezer)
+        if (col.gameObject.CompareTag("Ball"))
         {
-            freezerEffectActivated.Invoke(freezeEffectDuration);
-        }
+            //effect of this block is freezer/speedup
+            if (effectThisBlock == PickupEffect.Freezer)
+            {
+                freezerEffectActivated.Invoke(freezeEffectDuration);
+            }
+            else if (effectThisBlock == PickupEffect.Speedup)
+            {
+                speedupEffectActivated.Invoke(speedupEffectDuration);
+            }
 
-        base.OnCollisionEnter2D(col);
+            base.OnCollisionEnter2D(col);
+        }
     }
 
     #endregion

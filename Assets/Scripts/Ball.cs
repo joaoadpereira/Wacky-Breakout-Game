@@ -14,7 +14,6 @@ public class Ball : MonoBehaviour
 
     //data & positon of ball
     float paddleDimensionY;
-    float radiousBall;
 
     //RigidBody Field
     Rigidbody2D rB2D;
@@ -28,6 +27,12 @@ public class Ball : MonoBehaviour
 
     //Flag about is moviment or not 
     bool isMoving = false;
+
+    //handling the effects in ball
+    Timer speedupEffectTimer;
+    bool speedEffect = false;
+    Vector2 ballSpeed;
+
 
     #endregion
 
@@ -51,9 +56,6 @@ public class Ball : MonoBehaviour
         paddle = GameObject.FindGameObjectWithTag("Paddle");
         paddleDimensionY = paddle.GetComponent<BoxCollider2D>().size.y;
 
-        //get info about ball
-        radiousBall = GetComponent<CircleCollider2D>().radius;
-
         //Define Ball manager
         ballManager = GameObject.FindGameObjectWithTag("BallManager").GetComponent<BallManager>();
 
@@ -69,8 +71,15 @@ public class Ball : MonoBehaviour
         deadTimer.Duration = ConfigurationUtils.BallDeadTime; /*RANDOM TIME*/
         deadTimer.Run();
 
+        //setup listener for the speedupEffect
+        speedupEffectTimer = gameObject.AddComponent<Timer>();
+        EventManager.AddSpeedupListener(SpeedupBall);
+
     }
 
+    /// <summary>
+    /// Handles with initial movement and destroy ball
+    /// </summary>
     private void FixedUpdate()
     {
         //After 1 second and the ball is not moving
@@ -98,6 +107,21 @@ public class Ball : MonoBehaviour
     }
 
     /// <summary>
+    /// Handles with timers update
+    /// </summary>
+    private void Update()
+    {
+        //stop speedup effect
+        if (speedupEffectTimer.Finished)
+        {
+            speedupEffectTimer.Stop();
+            speedEffect = false;
+            SetBallSpeed(0.5f);
+        }
+
+    }
+
+    /// <summary>
     /// Add initial movement
     /// </summary>
     void AddInitialMovement()
@@ -107,8 +131,43 @@ public class Ball : MonoBehaviour
         Vector2 direction = new Vector2();
         direction.x = Mathf.Cos(angleRadsinitial);
         direction.y = Mathf.Sin(angleRadsinitial);
-        rB2D.AddForce(direction * ConfigurationUtils.BallImpulseForce, ForceMode2D.Force);
 
+        if (EffectUtils.SpeedupEffectActive)
+        {
+            SpeedupBall(EffectUtils.TimeLeftSpeedupEffect);
+            direction *= 2f;
+        }
+
+        rB2D.AddForce(direction * ConfigurationUtils.BallImpulseForce);
+
+    }
+
+    /// <summary>
+    /// Increases the speed of the ball within a duration
+    /// </summary>
+    /// <param name="speedupDuration"></param>
+    void SpeedupBall(float speedupDuration)
+    {
+        
+        //check if ball is not with the speedup effect
+        if (!speedEffect)
+        {
+            SetBallSpeed(2f);
+            speedEffect = true;
+
+            speedupEffectTimer.Duration = speedupDuration;
+            speedupEffectTimer.Run();
+        }
+        
+    }
+
+    /// <summary>
+    /// Sets the ball speed based on the given factor 
+    /// </summary>
+    /// <param name="speedFactor"></param>
+    void SetBallSpeed(float speedFactor)
+    {
+        rB2D.velocity *= speedFactor;
     }
 
 

@@ -9,6 +9,7 @@ public class Block_Speedup : Block
     {
         destroyPoints = ConfigurationUtils.BlockSpeedupPoints;
         percentageSpawn = ConfigurationUtils.BlockSpeedupProbability;
+        effect = PickupEffect.Speedup;
     }
 
 
