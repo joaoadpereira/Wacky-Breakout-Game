@@ -52,7 +52,7 @@ public class SpawnBlocks : MonoBehaviour
     {
         //calculate number of blocks per row
         int n = Mathf.FloorToInt(widthScreen / blockWidth);
-        Debug.Log(widthScreen / blockWidth + "; " + n);
+
         //Number of blocks per column
         int m = 3; 
         //calculate space necessary 

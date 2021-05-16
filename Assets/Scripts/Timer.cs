@@ -58,6 +58,24 @@ public class Timer : MonoBehaviour
 		get { return running; }
 	}
 
+	/// <summary>
+	/// Gets the time left in the timer 
+	/// </summary>
+	public float TimeLeft
+    {
+		get 
+		{
+			if (running)
+			{
+				return totalSeconds - elapsedSeconds;
+			}
+			else
+			{
+				return 0;
+			}
+		}
+    }
+
     #endregion
 
     #region Methods
@@ -104,6 +122,15 @@ public class Timer : MonoBehaviour
 		started = false;
 		running = false;
 	}
+
+	/// <summary>
+	/// Adds the given time to the timer
+	/// </summary>
+	/// <param name="moreTime"></param>
+	public void AddTime(float moreTime)
+    {
+		elapsedSeconds += moreTime;
+    }
 
 	#endregion
 }

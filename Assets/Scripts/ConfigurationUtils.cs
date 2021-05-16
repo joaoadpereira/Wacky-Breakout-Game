@@ -90,6 +90,11 @@ public static class ConfigurationUtils
         get { return configurationData.FreezerEffectDuration; }
     }
 
+    public static float SpeedupEffectDuration
+    {
+        get { return configurationData.SpeedupEffectDuration; }
+    }
+
     #endregion
 
     /// <summary>
