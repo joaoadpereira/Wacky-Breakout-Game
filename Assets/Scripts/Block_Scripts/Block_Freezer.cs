@@ -5,11 +5,13 @@ using UnityEngine;
 public class Block_Freezer : Block
 {
     // Start is called before the first frame update
-    void Start()
+    override protected void Start()
     {
         destroyPoints = ConfigurationUtils.BlockFreezerPoints;
         percentageSpawn = ConfigurationUtils.BlockFreezerProbability;
         effect = PickupEffect.Freezer;
+
+        base.Start();
     }
 
     //protected override void ActionBlock()

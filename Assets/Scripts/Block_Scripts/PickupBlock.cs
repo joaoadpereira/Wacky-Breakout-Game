@@ -17,7 +17,7 @@ public class PickupBlock : Block
 
     #endregion
 
-    #region Methods
+    
 
     // Start is called before the first frame update
     void Start()
@@ -43,6 +43,8 @@ public class PickupBlock : Block
             EventManager.AddSpeedupInvoker(this);
         }
     }
+
+    #region Effects event handling
 
     /// <summary>
     /// Adds the given listener for the freezer event
@@ -81,4 +83,5 @@ public class PickupBlock : Block
     }
 
     #endregion
+
 }

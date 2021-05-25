@@ -6,10 +6,12 @@ public class Block_Bonus : Block
 {
     
     // Start is called before the first frame update
-    void Start()
+    override protected void Start()
     {
         destroyPoints = ConfigurationUtils.BlockBonusPoints;
         percentageSpawn = ConfigurationUtils.BlockBonusProbability;
+
+        base.Start();
     }
 
 

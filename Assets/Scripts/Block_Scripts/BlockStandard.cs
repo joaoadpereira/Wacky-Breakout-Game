@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class BlockStandard : Block
 {
-    void Start()
+    override protected void Start()
     {
         //Setup data for this block
         destroyPoints = ConfigurationUtils.BlockStandardPoints;
         percentageSpawn = ConfigurationUtils.BlockStandardProbability;
+
+        base.Start();
     }
 
 

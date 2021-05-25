@@ -11,7 +11,10 @@ public class HUD : MonoBehaviour
     int numberOfBalls=0;
 
     [SerializeField] TMP_Text textPoints;
-    float points = 0; 
+    float points = 0;
+
+    //support block 
+    [SerializeField] BlockManager blockManager;
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +28,7 @@ public class HUD : MonoBehaviour
     {
         //Update scores
         numberOfBalls = BallUtils.NumberOfBalls;
-        points = BlockManager.Points;
+        points = blockManager.Points;
 
         //define text fields
         textNumberBalls.text = "Number of balls: " + numberOfBalls;

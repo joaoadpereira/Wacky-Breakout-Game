@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Block : MonoBehaviour
 {
@@ -11,6 +12,9 @@ public class Block : MonoBehaviour
     protected float percentageSpawn;
 
     protected PickupEffect effect;
+
+    //support Add points event
+    PointsAddedEvent pointsAddedEvent;
 
     #endregion
 
@@ -25,7 +29,14 @@ public class Block : MonoBehaviour
 
     #region Methods
 
+    virtual protected void Start()
+    {
+        //add points event handling
+        pointsAddedEvent = new PointsAddedEvent();
 
+        //register as invoker to add points event
+        EventManager.AddPointsInvoker(this);
+    }
 
 
 
@@ -38,11 +49,21 @@ public class Block : MonoBehaviour
         if (col.gameObject.CompareTag("Ball"))
         {
             //Add 'destroyPoints' from global points 
-            BlockManager.AddPoints(destroyPoints);
+            //BlockManager.AddPoints(destroyPoints);
+            pointsAddedEvent.Invoke((int)destroyPoints);
 
             //Destroy this block
             Destroy(gameObject);
         }
+    }
+
+    /// <summary>
+    /// Adds the given listener for the add points event
+    /// </summary>
+    /// <param name="listener"></param>
+    public void AddPointsAddedListener(UnityAction<int> listener)
+    {
+        pointsAddedEvent.AddListener(listener);
     }
 
     #endregion

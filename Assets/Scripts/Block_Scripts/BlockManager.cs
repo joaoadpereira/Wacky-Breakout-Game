@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class BlockManager 
+public class BlockManager : MonoBehaviour
 {
     #region Fields
     
@@ -16,22 +16,27 @@ public static class BlockManager
     /// <summary>
     /// Gets the current number of points 
     /// </summary>
-    public static float Points
+    public float Points
     {
         get { return points; }
     }
 
     #endregion
 
-    #region
+    #region Methods
+
+    private void Start()
+    {
+        EventManager.AddPointsListener(AddPoints);
+    }
 
     /// <summary>
     /// Adds the 'PointsToAdd' to points variable 
     /// </summary>
     /// <param name="PointsToAdd"></param>
-    public static void AddPoints(float PointsToAdd)
+    public static void AddPoints(int PointsToAdd)
     {
-        points += PointsToAdd;
+        points += (float)PointsToAdd;
     }
 
     #endregion

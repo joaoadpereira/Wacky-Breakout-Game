@@ -5,13 +5,22 @@ using UnityEngine.Events;
 
 public  static class EventManager 
 {
-
-    //event support
+    #region Fields
+    //event freeze effect support
     static PickupBlock freezeInvoker;
     static UnityAction<float> freezeListener;
 
+    //event speedup effect support
     static List<PickupBlock> speedupInvokers = new List<PickupBlock>();
     static List<UnityAction<float>> speedupListeners = new List<UnityAction<float>>();
+
+    //event add points support
+    static Block addPointsInvoker;
+    static UnityAction<int> addPointsListener;
+
+    #endregion
+
+    #region Effects event handling
 
     /// <summary>
     /// Adds the invoker for the freeze event
@@ -65,4 +74,34 @@ public  static class EventManager
         }
     }
 
+    #endregion
+
+    #region Add Points event handling
+    /// <summary>
+    /// Adds the invoker to the add points event
+    /// </summary>
+    /// <param name="invoker"></param>
+    public static void AddPointsInvoker(Block invoker)
+    {
+        addPointsInvoker = invoker;
+        if (addPointsListener != null)
+        {
+            addPointsInvoker.AddPointsAddedListener(addPointsListener);
+        }
+    }
+
+    /// <summary>
+    /// Adds the listner to the add points event
+    /// </summary>
+    /// <param name="listener"></param>
+    public static void AddPointsListener(UnityAction<int> listener)
+    {
+        addPointsListener = listener;
+        if (addPointsInvoker != null)
+        {
+            addPointsInvoker.AddPointsAddedListener(addPointsListener);
+        }
+    }
+
+    #endregion
 }

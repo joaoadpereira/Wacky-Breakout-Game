@@ -5,11 +5,13 @@ using UnityEngine;
 public class Block_Speedup : Block
 {
     // Start is called before the first frame update
-    void Start()
+    override protected void Start()
     {
         destroyPoints = ConfigurationUtils.BlockSpeedupPoints;
         percentageSpawn = ConfigurationUtils.BlockSpeedupProbability;
         effect = PickupEffect.Speedup;
+
+        base.Start();
     }
 
 
