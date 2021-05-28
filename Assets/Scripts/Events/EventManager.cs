@@ -18,6 +18,10 @@ public  static class EventManager
     static Block addPointsInvoker;
     static UnityAction<int> addPointsListener;
 
+    //event reduce balls left support
+    static BallManager reduceBallsLeftInvoker;
+    static UnityAction<int> reduceBallsLeftListener; 
+
     #endregion
 
     #region Effects event handling
@@ -91,7 +95,7 @@ public  static class EventManager
     }
 
     /// <summary>
-    /// Adds the listner to the add points event
+    /// Adds the listener to the add points event
     /// </summary>
     /// <param name="listener"></param>
     public static void AddPointsListener(UnityAction<int> listener)
@@ -100,6 +104,36 @@ public  static class EventManager
         if (addPointsInvoker != null)
         {
             addPointsInvoker.AddPointsAddedListener(addPointsListener);
+        }
+    }
+
+    #endregion
+
+    #region Reduce Balls Left event handling
+
+    /// <summary>
+    /// Adds the invoker to the reduce ball left event
+    /// </summary>
+    /// <param name="invoker"></param>
+    public static void ReduceBallsLeftInvoker(BallManager invoker)
+    {
+        reduceBallsLeftInvoker = invoker;
+        if (reduceBallsLeftListener != null)
+        {
+            reduceBallsLeftInvoker.ReduceBallsLeftListener(reduceBallsLeftListener);
+        }
+    }
+
+    /// <summary>
+    /// Adds the listener to the reduce ball left event
+    /// </summary>
+    /// <param name="listener"></param>
+    public static void ReduceBallsLeftListener(UnityAction<int> listener)
+    {
+        reduceBallsLeftListener = listener;
+        if (reduceBallsLeftInvoker != null)
+        {
+            reduceBallsLeftInvoker.ReduceBallsLeftListener(reduceBallsLeftListener);
         }
     }
 

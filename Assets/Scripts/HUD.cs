@@ -16,6 +16,9 @@ public class HUD : MonoBehaviour
     //support block 
     [SerializeField] BlockManager blockManager;
 
+    //support Ball utilis
+    [SerializeField] BallUtils ballUtils;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,11 +30,11 @@ public class HUD : MonoBehaviour
     void Update()
     {
         //Update scores
-        numberOfBalls = BallUtils.NumberOfBalls;
+        numberOfBalls = ballUtils.NumberOfBalls;
         points = blockManager.Points;
 
         //define text fields
-        textNumberBalls.text = "Number of balls: " + numberOfBalls;
+        textNumberBalls.text = "Number of balls: " + numberOfBalls.ToString();
         textPoints.text = "Points: " + points;
     }
 }

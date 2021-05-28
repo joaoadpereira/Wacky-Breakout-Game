@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Block_Freezer : Block
 {
+
     // Start is called before the first frame update
     override protected void Start()
     {

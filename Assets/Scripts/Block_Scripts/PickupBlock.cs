@@ -20,7 +20,7 @@ public class PickupBlock : Block
     
 
     // Start is called before the first frame update
-    void Start()
+    override protected void Start()
     {
         //check the effect of this block
         effectThisBlock = GetComponent<Block>().Effect;
@@ -42,6 +42,11 @@ public class PickupBlock : Block
         {
             EventManager.AddSpeedupInvoker(this);
         }
+
+        //Define here destroy points (since OnCollisionEnter2D is handled in this class)
+        //destroyPoints = GetComponent<Block>().DestroyPoints;
+
+        base.Start();
     }
 
     #region Effects event handling
@@ -64,6 +69,10 @@ public class PickupBlock : Block
         speedupEffectActivated.AddListener(listener);
     }
 
+    /// <summary>
+    /// Adds logic no base OnCollisionEnter2D to handle collisions with Effect blocks
+    /// </summary>
+    /// <param name="col"></param>
     protected override void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.CompareTag("Ball"))

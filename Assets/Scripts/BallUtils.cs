@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class BallUtils 
+public class BallUtils : MonoBehaviour
 {
     #region Fields
 
     //initial number of balls available
-    static int numberOfBalls=(int)ConfigurationUtils.InitialNumberBalls;
+    //float initialNumberOfBalls = ConfigurationUtils.InitialNumberBalls;
+    int numberOfBalls;
 
     #endregion
 
@@ -16,7 +17,7 @@ public static class BallUtils
     /// <summary>
     /// Provides the current number of balls 
     /// </summary>
-    public static int NumberOfBalls
+    public int NumberOfBalls
     {
         get { return numberOfBalls; }
     }
@@ -25,12 +26,20 @@ public static class BallUtils
 
     #region Methods
 
+    private void Start()
+    {
+        //register as listener of reduce balls left event
+        EventManager.ReduceBallsLeftListener(ReduceNumberOfBalls);
 
+        //convert float balls to int balls
+        numberOfBalls = (int)ConfigurationUtils.InitialNumberBalls;
+
+    }
 
     /// <summary>
     /// Take or add "operation" balls out of total number of balls available 
     /// </summary>
-    public static void ReduceNumberOfBalls(int operation)
+    void ReduceNumberOfBalls(int operation)
     {
         numberOfBalls += operation;
       

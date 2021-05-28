@@ -34,7 +34,7 @@ public class BlockManager : MonoBehaviour
     /// Adds the 'PointsToAdd' to points variable 
     /// </summary>
     /// <param name="PointsToAdd"></param>
-    public static void AddPoints(int PointsToAdd)
+    public void AddPoints(int PointsToAdd)
     {
         points += (float)PointsToAdd;
     }

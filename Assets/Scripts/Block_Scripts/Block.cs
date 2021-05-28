@@ -25,6 +25,14 @@ public class Block : MonoBehaviour
         get { return effect; }
     }
 
+    /// <summary>
+    /// Exposes the destroyPoints of this block
+    /// </summary>
+    public float DestroyPoints
+    {
+        get { return destroyPoints; }
+    }
+
     #endregion
 
     #region Methods
@@ -49,7 +57,6 @@ public class Block : MonoBehaviour
         if (col.gameObject.CompareTag("Ball"))
         {
             //Add 'destroyPoints' from global points 
-            //BlockManager.AddPoints(destroyPoints);
             pointsAddedEvent.Invoke((int)destroyPoints);
 
             //Destroy this block
