@@ -50,6 +50,7 @@ public class Paddle : MonoBehaviour
         //set up listener for the freezerEffect
         timerFrozenPaddle = GetComponent<Timer>();
         EventManager.AddFreezeListener(FreezePaddle);
+        timerFrozenPaddle.AddFinishedTimeListener(UnfreezePaddle);
     }
 
     /// <summary>
@@ -100,25 +101,6 @@ public class Paddle : MonoBehaviour
 
     private void Update()
     {
-        
-        //unfreeze the paddle and stop the freeze timer (once freeze timer is finished)
-        if (timerFrozenPaddle.Finished)
-        {
-            //run again the timer
-            if (timerFrozenRunning == true)
-            {
-                frozenPaddle = true;
-                timerFrozenPaddle.Duration = timeAgain;
-                timerFrozenPaddle.Run();
-                timerFrozenRunning = false;
-            }
-            else
-            {
-                //unfreeze the paddle
-                frozenPaddle = false;
-            }
-
-        }
 
     }
 
@@ -181,6 +163,24 @@ public class Paddle : MonoBehaviour
             frozenPaddle = true;
         }
         
+    }
+
+    public void UnfreezePaddle()
+    {
+        //run again the timer
+        if (timerFrozenRunning == true)
+        {
+            frozenPaddle = true;
+            timerFrozenPaddle.Duration = timeAgain;
+            timerFrozenPaddle.Run();
+            timerFrozenRunning = false;
+        }
+        else
+        {
+            //unfreeze the paddle
+            frozenPaddle = false;
+        }
+
     }
 
     #endregion

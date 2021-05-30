@@ -75,6 +75,9 @@ public class Ball : MonoBehaviour
         speedupEffectTimer = gameObject.AddComponent<Timer>();
         EventManager.AddSpeedupListener(SpeedupBall);
 
+        //speedup effect support timer
+        speedupEffectTimer.AddFinishedTimeListener(SpeedupEffect);
+
     }
 
     /// <summary>
@@ -111,13 +114,6 @@ public class Ball : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        //stop speedup effect
-        if (speedupEffectTimer.Finished)
-        {
-            speedupEffectTimer.Stop();
-            speedEffect = false;
-            SetBallSpeed(0.5f);
-        }
 
     }
 
@@ -193,6 +189,16 @@ public class Ball : MonoBehaviour
         //Destroy this ball
         Destroy(gameObject);
 
+    }
+
+    /// <summary>
+    /// stop speedup effect
+    /// </summary>
+    public void SpeedupEffect()
+    {
+        speedupEffectTimer.Stop();
+        speedEffect = false;
+        SetBallSpeed(0.5f);
     }
 
     #endregion
