@@ -149,6 +149,9 @@ public class Paddle : MonoBehaviour
     /// <param name="freezeDuration"></param>
     void FreezePaddle(float freezeDuration)
     {
+        //play freeze clip 
+        AudioManager.Play(AudioClipName.FreezerEffectActivated);
+
         //timer already running 
         if (timerFrozenPaddle.Running)
         {
@@ -167,6 +170,9 @@ public class Paddle : MonoBehaviour
 
     public void UnfreezePaddle()
     {
+        //play unfreeze clip 
+        AudioManager.Play(AudioClipName.FreezerEffectDeactivated);
+
         //run again the timer
         if (timerFrozenRunning == true)
         {

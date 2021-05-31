@@ -70,6 +70,9 @@ public class Block : MonoBehaviour
             //Invoke reduce number of blcoks
             reduceBlocksLeftEvent.Invoke();
 
+            //play audio 
+            AudioManager.Play(AudioClipName.BallCollision);
+
             //Destroy this block
             Destroy(gameObject);
         }

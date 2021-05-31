@@ -27,6 +27,8 @@ public class GameOver : MonoBehaviour
 
         scoreTextTMPro.text = scoreText + finalScore;
 
+        //play gameover clip
+        AudioManager.Play(AudioClipName.GameLost);
     }
 
 

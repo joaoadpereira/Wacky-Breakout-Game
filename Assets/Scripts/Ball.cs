@@ -78,6 +78,9 @@ public class Ball : MonoBehaviour
         //speedup effect support timer
         speedupEffectTimer.AddFinishedTimeListener(SpeedupEffect);
 
+        //play ball spawn clip
+        AudioManager.Play(AudioClipName.BallSpawn);
+
     }
 
     /// <summary>
@@ -144,10 +147,14 @@ public class Ball : MonoBehaviour
     /// <param name="speedupDuration"></param>
     void SpeedupBall(float speedupDuration)
     {
+        //play speedup clip
+        AudioManager.Play(AudioClipName.SpeedupEffectActivated);
         
         //check if ball is not with the speedup effect
         if (!speedEffect)
         {
+
+
             SetBallSpeed(2f);
             speedEffect = true;
 
@@ -189,6 +196,8 @@ public class Ball : MonoBehaviour
         //Destroy this ball
         Destroy(gameObject);
 
+        //play destroy ball
+        AudioManager.Play(AudioClipName.BallLost);
     }
 
     /// <summary>
@@ -199,6 +208,9 @@ public class Ball : MonoBehaviour
         speedupEffectTimer.Stop();
         speedEffect = false;
         SetBallSpeed(0.5f);
+
+        //play deactivate speedup clip
+        AudioManager.Play(AudioClipName.SpeedupEffectDeactivated);
     }
 
     #endregion
