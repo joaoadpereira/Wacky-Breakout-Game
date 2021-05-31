@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Block : MonoBehaviour
 {
@@ -12,6 +13,13 @@ public class Block : MonoBehaviour
 
     protected PickupEffect effect;
 
+    //support Add points event
+    PointsAddedEvent pointsAddedEvent;
+
+    //support reduce blocks left event
+    ReduceBlocksLeftEvent reduceBlocksLeftEvent;
+
+
     #endregion
 
     #region Properties
@@ -21,11 +29,30 @@ public class Block : MonoBehaviour
         get { return effect; }
     }
 
+    /// <summary>
+    /// Exposes the destroyPoints of this block
+    /// </summary>
+    public float DestroyPoints
+    {
+        get { return destroyPoints; }
+    }
+
     #endregion
 
     #region Methods
 
+    virtual protected void Start()
+    {
+        //add points event handling
+        pointsAddedEvent = new PointsAddedEvent();
 
+        //register as invoker to add points event
+        EventManager.AddPointsInvoker(this);
+
+        //add reduce blocks left event
+        reduceBlocksLeftEvent = new ReduceBlocksLeftEvent();
+        EventManager.AddReduceBlockInvoker(this);
+    }
 
 
 
@@ -38,11 +65,35 @@ public class Block : MonoBehaviour
         if (col.gameObject.CompareTag("Ball"))
         {
             //Add 'destroyPoints' from global points 
-            BlockManager.AddPoints(destroyPoints);
+            pointsAddedEvent.Invoke((int)destroyPoints);
+            
+            //Invoke reduce number of blcoks
+            reduceBlocksLeftEvent.Invoke();
+
+            //play audio 
+            AudioManager.Play(AudioClipName.BallCollision);
 
             //Destroy this block
             Destroy(gameObject);
         }
+    }
+
+    /// <summary>
+    /// Adds the given listener for the add points event
+    /// </summary>
+    /// <param name="listener"></param>
+    public void AddPointsAddedListener(UnityAction<int> listener)
+    {
+        pointsAddedEvent.AddListener(listener);
+    }
+
+    /// <summary>
+    /// ADds the given listener to the reduce blocks left event
+    /// </summary>
+    /// <param name="listener"></param>
+    public void AddReduceBlocksLeftListener(UnityAction listener)
+    {
+        reduceBlocksLeftEvent.AddListener(listener);
     }
 
     #endregion

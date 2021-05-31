@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// A timer
@@ -18,6 +19,9 @@ public class Timer : MonoBehaviour
 	
 	// support for Finished property
 	bool started = false;
+
+	//support for finished event
+	FinishedTimeEvent finishedTimeEvent = new FinishedTimeEvent();
 	
 	#endregion
 	
@@ -92,6 +96,8 @@ public class Timer : MonoBehaviour
 			if (elapsedSeconds >= totalSeconds)
             {
 				running = false;
+				//tell to the event to invoke
+				finishedTimeEvent.Invoke();
 			}
 		}
 	}
@@ -130,6 +136,15 @@ public class Timer : MonoBehaviour
 	public void AddTime(float moreTime)
     {
 		elapsedSeconds += moreTime;
+    }
+
+	/// <summary>
+	/// Adds the given listener for the add points event
+	/// </summary>
+	/// <param name="listener"></param>
+	public void AddFinishedTimeListener(UnityAction listener)
+    {
+		finishedTimeEvent.AddListener(listener);
     }
 
 	#endregion

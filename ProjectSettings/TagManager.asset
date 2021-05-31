@@ -11,6 +11,7 @@ TagManager:
   - ScoreText
   - BallsLeftText
   - TextNumberBalls
+  - HUD
   layers:
   - Default
   - TransparentFX

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class BallManager : MonoBehaviour
 {
@@ -17,6 +18,9 @@ public class BallManager : MonoBehaviour
 
     //flag to retry if spawn zone has overlap
     bool retrySpawn=false;
+
+    //support reduce balls left event
+    ReduceBallsLeftEvent reduceBallsLeftEvent;
 
     #endregion
 
@@ -38,6 +42,7 @@ public class BallManager : MonoBehaviour
         //Add a timer and start it for ball instantiation 
         InstantiateTimer = gameObject.AddComponent<Timer>();
         SetTimer();
+        InstantiateTimer.AddFinishedTimeListener(InstantiateBall);
 
         //Define corners of spawn zone rectangle 
         BoxCollider2D collider = initialBall.GetComponent<BoxCollider2D>();
@@ -45,19 +50,15 @@ public class BallManager : MonoBehaviour
         float ballColliderHalfHeight = collider.size.y / 2;
         spawnLocationMin = new Vector2(initialBall.transform.position.x - ballColliderHalfWidth, initialBall.transform.position.y - ballColliderHalfHeight);
         spawnLocationMax = new Vector2(initialBall.transform.position.x + ballColliderHalfWidth, initialBall.transform.position.y + ballColliderHalfHeight);
+
+        //Register as invoker of reduce balls left event 
+        reduceBallsLeftEvent = new ReduceBallsLeftEvent();
+        EventManager.ReduceBallsLeftInvoker(this);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-        //When the timer (random time) is finished, spawn a new ball
-        if (InstantiateTimer.Finished)
-        {
-            //add a new ball and increase the counter
-            HandleBallOut(1,true);
-            SetTimer();
-        }
 
         //Check if spawn position is overlaped
         if (retrySpawn)
@@ -73,7 +74,8 @@ public class BallManager : MonoBehaviour
     /// <param name="InstantiateNewBall"></param>
     public void HandleBallOut(int operation,bool InstantiateNewBall)
     {
-        BallUtils.ReduceNumberOfBalls(operation);
+        //BallUtils.ReduceNumberOfBalls(operation);
+        reduceBallsLeftEvent.Invoke(operation);
 
         //Instantiate a new ball
         if (InstantiateNewBall)
@@ -109,6 +111,24 @@ public class BallManager : MonoBehaviour
             InstantiateTimer.Duration = randomTime;
             InstantiateTimer.Run();
         }
+    }
+
+    /// <summary>
+    /// Adds the given listener for the reduce balls left event
+    /// </summary>
+    /// <param name="listener"></param>
+    public void ReduceBallsLeftListener(UnityAction<int> listener)
+    {
+        reduceBallsLeftEvent.AddListener(listener);
+    }
+
+    /// <summary>
+    /// Add a new ball and increase the counter
+    /// </summary>
+    public void InstantiateBall()
+    {
+        HandleBallOut(1, true);
+        SetTimer();
     }
 
     #endregion

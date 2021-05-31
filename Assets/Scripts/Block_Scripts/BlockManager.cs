@@ -2,12 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class BlockManager 
+public class BlockManager : MonoBehaviour
 {
     #region Fields
     
     //points variable definition
     static float points;
+
+    //Number of blocks definition
+    [SerializeField] int currentNumberOfBlocks;
+    SpawnBlocks spawnBlocks;
+
+    bool gameOver = false;
 
     #endregion
 
@@ -16,22 +22,51 @@ public static class BlockManager
     /// <summary>
     /// Gets the current number of points 
     /// </summary>
-    public static float Points
+    public float Points
     {
         get { return points; }
     }
 
     #endregion
 
-    #region
+    #region Methods
+
+    private void Start()
+    {
+        EventManager.AddPointsListener(AddPoints);
+
+        //initial number of blocks instantiated
+        spawnBlocks = GetComponent<SpawnBlocks>();
+        currentNumberOfBlocks = spawnBlocks.NumberOfBlocksInGame;
+
+        //register as block reduce blocks left event
+        EventManager.AddReduceBlockListener(ReduceBlockFromCurrentNumberOfBlocks);
+    }
+
+    private void Update()
+    {
+        if (currentNumberOfBlocks < 1 && !gameOver)
+        {
+            MenuManager.GotoMenu(MenuName.GameOverMenu);
+            gameOver = true;
+        }
+    }
 
     /// <summary>
     /// Adds the 'PointsToAdd' to points variable 
     /// </summary>
     /// <param name="PointsToAdd"></param>
-    public static void AddPoints(float PointsToAdd)
+    public void AddPoints(int PointsToAdd)
     {
-        points += PointsToAdd;
+        points += (float)PointsToAdd;
+    }
+
+    /// <summary>
+    /// Reduces 1 block to the current number of blocks 
+    /// </summary>
+    public void ReduceBlockFromCurrentNumberOfBlocks()
+    {
+        currentNumberOfBlocks -= 1;
     }
 
     #endregion

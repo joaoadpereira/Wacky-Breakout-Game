@@ -17,10 +17,10 @@ public class PickupBlock : Block
 
     #endregion
 
-    #region Methods
+    
 
     // Start is called before the first frame update
-    void Start()
+    override protected void Start()
     {
         //check the effect of this block
         effectThisBlock = GetComponent<Block>().Effect;
@@ -42,7 +42,27 @@ public class PickupBlock : Block
         {
             EventManager.AddSpeedupInvoker(this);
         }
+
+        // Define data based on component attached (speedup or freezer)
+        // Not the best approach but it is used to minimize major changes 
+
+        if (GetComponent<Block_Speedup>() != null)
+        {
+            destroyPoints = ConfigurationUtils.BlockSpeedupPoints;
+            percentageSpawn = ConfigurationUtils.BlockSpeedupProbability;
+            effect = PickupEffect.Speedup;
+        }
+        else if(GetComponent<Block_Freezer>()!= null)
+        {
+            destroyPoints = ConfigurationUtils.BlockFreezerPoints;
+            percentageSpawn = ConfigurationUtils.BlockFreezerProbability;
+            effect = PickupEffect.Freezer;
+        }
+
+        base.Start();
     }
+
+    #region Effects event handling
 
     /// <summary>
     /// Adds the given listener for the freezer event
@@ -62,6 +82,10 @@ public class PickupBlock : Block
         speedupEffectActivated.AddListener(listener);
     }
 
+    /// <summary>
+    /// Adds logic no base OnCollisionEnter2D to handle collisions with Effect blocks
+    /// </summary>
+    /// <param name="col"></param>
     protected override void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.CompareTag("Ball"))
@@ -76,9 +100,11 @@ public class PickupBlock : Block
                 speedupEffectActivated.Invoke(speedupEffectDuration);
             }
 
+
             base.OnCollisionEnter2D(col);
         }
     }
 
     #endregion
+
 }
