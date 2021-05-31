@@ -43,8 +43,21 @@ public class PickupBlock : Block
             EventManager.AddSpeedupInvoker(this);
         }
 
-        //Define here destroy points (since OnCollisionEnter2D is handled in this class)
-        //destroyPoints = GetComponent<Block>().DestroyPoints;
+        // Define data based on component attached (speedup or freezer)
+        // Not the best approach but it is used to minimize major changes 
+
+        if (GetComponent<Block_Speedup>() != null)
+        {
+            destroyPoints = ConfigurationUtils.BlockSpeedupPoints;
+            percentageSpawn = ConfigurationUtils.BlockSpeedupProbability;
+            effect = PickupEffect.Speedup;
+        }
+        else if(GetComponent<Block_Freezer>()!= null)
+        {
+            destroyPoints = ConfigurationUtils.BlockFreezerPoints;
+            percentageSpawn = ConfigurationUtils.BlockFreezerProbability;
+            effect = PickupEffect.Freezer;
+        }
 
         base.Start();
     }
@@ -86,6 +99,7 @@ public class PickupBlock : Block
             {
                 speedupEffectActivated.Invoke(speedupEffectDuration);
             }
+
 
             base.OnCollisionEnter2D(col);
         }

@@ -26,6 +26,10 @@ public  static class EventManager
     static HUD lastBallLostInvoker;
     static UnityAction lastBallLostListener;
 
+    //event reduce blocks left event
+    static List<Block> reduceBlockLeftInvokers = new List<Block>();
+    static List<UnityAction> reduceBlockLeftListeners = new List<UnityAction>();
+
     #endregion
 
     #region Effects event handling
@@ -171,6 +175,37 @@ public  static class EventManager
         }
     }
 
+
+
+    #endregion
+
+    #region Reduce blocks left event handling
+
+    /// <summary>
+    /// Adds the invoker to the reduce block event
+    /// </summary>
+    /// <param name="invoker"></param>
+    public static void AddReduceBlockInvoker(Block invoker)
+    {
+        reduceBlockLeftInvokers.Add(invoker);
+        foreach(UnityAction listener in reduceBlockLeftListeners)
+        {
+            invoker.AddReduceBlocksLeftListener(listener);
+        }
+    }
+
+    /// <summary>
+    /// Adds the listener to the reduce block event
+    /// </summary>
+    /// <param name="listener"></param>
+    public static void AddReduceBlockListener(UnityAction listener)
+    {
+        reduceBlockLeftListeners.Add(listener);
+        foreach(Block invoker in reduceBlockLeftInvokers)
+        {
+            invoker.AddReduceBlocksLeftListener(listener);
+        }
+    }
 
 
     #endregion

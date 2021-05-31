@@ -16,6 +16,10 @@ public class Block : MonoBehaviour
     //support Add points event
     PointsAddedEvent pointsAddedEvent;
 
+    //support reduce blocks left event
+    ReduceBlocksLeftEvent reduceBlocksLeftEvent;
+
+
     #endregion
 
     #region Properties
@@ -44,6 +48,10 @@ public class Block : MonoBehaviour
 
         //register as invoker to add points event
         EventManager.AddPointsInvoker(this);
+
+        //add reduce blocks left event
+        reduceBlocksLeftEvent = new ReduceBlocksLeftEvent();
+        EventManager.AddReduceBlockInvoker(this);
     }
 
 
@@ -58,6 +66,9 @@ public class Block : MonoBehaviour
         {
             //Add 'destroyPoints' from global points 
             pointsAddedEvent.Invoke((int)destroyPoints);
+            
+            //Invoke reduce number of blcoks
+            reduceBlocksLeftEvent.Invoke();
 
             //Destroy this block
             Destroy(gameObject);
@@ -71,6 +82,15 @@ public class Block : MonoBehaviour
     public void AddPointsAddedListener(UnityAction<int> listener)
     {
         pointsAddedEvent.AddListener(listener);
+    }
+
+    /// <summary>
+    /// ADds the given listener to the reduce blocks left event
+    /// </summary>
+    /// <param name="listener"></param>
+    public void AddReduceBlocksLeftListener(UnityAction listener)
+    {
+        reduceBlocksLeftEvent.AddListener(listener);
     }
 
     #endregion

@@ -9,6 +9,12 @@ public class BlockManager : MonoBehaviour
     //points variable definition
     static float points;
 
+    //Number of blocks definition
+    [SerializeField] int currentNumberOfBlocks;
+    SpawnBlocks spawnBlocks;
+
+    bool gameOver = false;
+
     #endregion
 
     #region Properties
@@ -28,6 +34,22 @@ public class BlockManager : MonoBehaviour
     private void Start()
     {
         EventManager.AddPointsListener(AddPoints);
+
+        //initial number of blocks instantiated
+        spawnBlocks = GetComponent<SpawnBlocks>();
+        currentNumberOfBlocks = spawnBlocks.NumberOfBlocksInGame;
+
+        //register as block reduce blocks left event
+        EventManager.AddReduceBlockListener(ReduceBlockFromCurrentNumberOfBlocks);
+    }
+
+    private void Update()
+    {
+        if (currentNumberOfBlocks < 1 && !gameOver)
+        {
+            MenuManager.GotoMenu(MenuName.GameOverMenu);
+            gameOver = true;
+        }
     }
 
     /// <summary>
@@ -37,6 +59,14 @@ public class BlockManager : MonoBehaviour
     public void AddPoints(int PointsToAdd)
     {
         points += (float)PointsToAdd;
+    }
+
+    /// <summary>
+    /// Reduces 1 block to the current number of blocks 
+    /// </summary>
+    public void ReduceBlockFromCurrentNumberOfBlocks()
+    {
+        currentNumberOfBlocks -= 1;
     }
 
     #endregion

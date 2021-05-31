@@ -23,6 +23,24 @@ public class SpawnBlocks : MonoBehaviour
     float widthScreen;
     float heightScreen;
 
+    //Total number of blocks instantiated
+    int n;
+    int m;
+    int numberOfBlocksInGame;
+
+
+    #endregion
+
+    #region Properties
+
+    /// <summary>
+    /// Gets the numbers of blocks instantiated in the game 
+    /// </summary>
+    public int NumberOfBlocksInGame
+    {
+        get { return n*m;}
+    }
+
     #endregion
 
     #region Methods
@@ -43,6 +61,7 @@ public class SpawnBlocks : MonoBehaviour
         //Create the blocks
         CreateBlocks();
 
+
     }
 
     /// <summary>
@@ -51,10 +70,10 @@ public class SpawnBlocks : MonoBehaviour
     private void CreateBlocks()
     {
         //calculate number of blocks per row
-        int n = Mathf.FloorToInt(widthScreen / blockWidth);
+        n = Mathf.FloorToInt(widthScreen / blockWidth);
 
         //Number of blocks per column
-        int m = 3; 
+        m = 3; 
         //calculate space necessary 
         float space = (widthScreen- n * blockWidth) / 2;
 
