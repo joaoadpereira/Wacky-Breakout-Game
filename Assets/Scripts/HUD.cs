@@ -19,6 +19,18 @@ public class HUD : MonoBehaviour
     //support Ball utilis
     [SerializeField] BallUtils ballUtils;
 
+    #region Properties
+
+    /// <summary>
+    /// Gets the current points
+    /// </summary>
+    public float Points
+    {
+        get { return points; }
+    }
+
+    #endregion
+
     // Start is called before the first frame update
     void Start()
     {
