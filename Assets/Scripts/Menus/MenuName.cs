@@ -9,4 +9,5 @@ public enum MenuName
    HelpMenu,
    GamePlayMenu,
    PauseMenu,
+   GameOverMenu,
 }

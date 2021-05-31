@@ -20,7 +20,11 @@ public  static class EventManager
 
     //event reduce balls left support
     static BallManager reduceBallsLeftInvoker;
-    static UnityAction<int> reduceBallsLeftListener; 
+    static UnityAction<int> reduceBallsLeftListener;
+
+    //event last ball lost event support
+    static HUD lastBallLostInvoker;
+    static UnityAction lastBallLostListener;
 
     #endregion
 
@@ -136,6 +140,38 @@ public  static class EventManager
             reduceBallsLeftInvoker.ReduceBallsLeftListener(reduceBallsLeftListener);
         }
     }
+
+    #endregion
+
+    #region Last Ball Lost Event handling
+
+    /// <summary>
+    /// Adds the invoker to the last ball lost event 
+    /// </summary>
+    /// <param name="invoker"></param>
+    public static void LastBallLostInvoker(HUD invoker)
+    {
+        lastBallLostInvoker = invoker;
+        if (lastBallLostListener != null)
+        {
+            lastBallLostInvoker.AddLastBallLostListener(lastBallLostListener);
+        }
+    }
+
+    /// <summary>
+    /// Adds the listener to the last ball lost event
+    /// </summary>
+    /// <param name="listener"></param>
+    public static void LastBallLostListener(UnityAction listener)
+    {
+        lastBallLostListener = listener;
+        if (lastBallLostInvoker != null)
+        {
+            lastBallLostInvoker.AddLastBallLostListener(lastBallLostListener);
+        }
+    }
+
+
 
     #endregion
 }
